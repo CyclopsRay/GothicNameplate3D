@@ -1,33 +1,35 @@
 # GothicNameplate3D
 
-给定两行文字，生成字母从底座沿圆弧升起的立体名牌。左侧为文字，右侧为圆形展示台；展示台与名牌处于相同的前后区域。默认总长 **150 mm**，文字末端平面与水平底座夹角 **70°**。
+**English** | [简体中文](README.zh-CN.md)
 
-![Bandosa 字体的 PUT YOUR / NAME HERE 名牌](docs/images/preview.png)
+Generate a 3D nameplate from two text rows, with letters rising from the base along circular arcs and a round display platform on the right. The platform shares the nameplate's front-to-back footprint. Defaults are **150 mm** overall length and a **70°** terminal text plane measured above the horizontal base.
 
-Generate a swept-letter nameplate from two text rows, with a circular display platform on the right. Export a checked STL, editable Blender scene, GLB, and preview images. The example uses **Bandosa Regular**; provide your own licensed font once, then reuse its local glyph cache.
+![PUT YOUR / NAME HERE nameplate in Bandosa Regular](docs/images/preview.png)
 
-## 快速开始 / Quick start
+Export a checked STL, editable Blender scene, GLB, and preview images. The example uses **Bandosa Regular**; provide your own licensed font once, then reuse its local glyph cache.
 
-需要 **Python 3.10+** 和 **Blender**。建模及导出已在 macOS、Blender **5.2.1** 验证；其他 Blender 版本和操作系统尚未完成完整建模验证。运行生成器无需安装 pip 包，Blender 自带所需的 NumPy。
+## Quick start
+
+Requires **Python 3.10+** and **Blender**. Modeling and export have been verified on macOS with Blender **5.2.1**; other Blender versions and operating systems have not completed full modeling validation. The generator needs no additional pip packages: Blender supplies NumPy.
 
 ```bash
 git clone git@github.com:CyclopsRay/GothicNameplate3D.git
 cd GothicNameplate3D
 
-# 首次配置字体；已有相同版本的缓存时会直接复用
+# Configure a font once; a compatible existing cache is reused
 python3 generate.py setup-font /path/to/bandosa.regular.ttf
 
-# 之后只需要两行文字
+# After setup, just supply two text rows
 python3 generate.py "PUT YOUR" "NAME HERE"
 ```
 
-`setup-font` 将字体复制到本地 `assets/fonts/`，预处理该字体支持的可打印字形，并保存默认选择。Bandosa 的参考版本包含 90 个可打印字符。字体、字形缓存和本机配置均被 Git 忽略；换名字不会重复转换已经缓存的字形。
+`setup-font` copies the font into the local `assets/fonts/` directory, preprocesses its supported printable glyphs, and saves it as the local default. The reference Bandosa version contains 90 printable characters. Fonts, glyph caches, and local configuration are ignored by Git; changing the text does not reconvert cached glyphs.
 
-**字体需自行提供。** Bandosa 发布页标注个人使用；开源代码的 GPL-3.0 许可不包含字体授权。本仓库不分发 TTF/OTF 或派生的整套字形缓存。请从 [字体发布页](https://www.1001fonts.com/bandosa-font.html) 或 [Blankids Studio](https://blankidsfonts.com/product/bandosa-a-handmade-blackletter-font/) 获取适用授权的文件。也支持其他独立 TTF/OTF。详见 [字体说明](assets/fonts/README.md)。
+**Bring your own font.** Bandosa's distribution page describes personal use; this project's GPL-3.0 code license does not grant font rights. This repository does not distribute TTF/OTF files or complete derived glyph caches. Obtain a file with a license appropriate to your use from the [font distribution page](https://www.1001fonts.com/bandosa-font.html) or [Blankids Studio](https://blankidsfonts.com/product/bandosa-a-handmade-blackletter-font/). Other individual TTF/OTF fonts are also supported. See the [font guide](assets/fonts/README.md).
 
-Blender 按 `--blender`、`BLENDER_BIN`、系统 PATH、macOS 标准安装路径的顺序查找。不能自动找到时，在配置和生成命令上添加 `--blender /path/to/blender`。Windows 可使用 `python` 代替 `python3`。
+Blender is located using `--blender`, `BLENDER_BIN`, the system PATH, then the standard macOS installation path. If it is not found automatically, add `--blender /path/to/blender` to both the setup and generation commands. On Windows, you can use `python` instead of `python3`.
 
-## 调整模型
+## Customize the model
 
 ```bash
 python3 generate.py "MEI'S" "GARDEN" --length 180 --angle 65 --output outputs/mei-garden
@@ -35,58 +37,58 @@ python3 generate.py "ALICE" "WONDERLAND" --fit preserve --views beauty,front,sid
 python3 generate.py "YOUR" "NAME" --font /path/to/custom.ttf --no-render
 ```
 
-| 参数 | 默认值 | 作用 |
+| Argument | Default | Behavior |
 | --- | --- | --- |
-| 两个位置参数 | 必填 | 上排文字、下排文字；保留大小写 |
-| `--length` | `150` | 总长度，单位 mm；其他尺寸同比例缩放 |
-| `--angle` | `70` | 末端文字平面相对底座的角度，范围 45–85° |
-| `--fit` | `stretch` | 按模板铺满；`preserve` 保留字体比例 |
-| `--font` | 本机默认字体 | 本次使用的 TTF/OTF，不更改默认字体 |
-| `--output` | `outputs/<timestamp>` | 新建或空目录；拒绝覆盖已有结果 |
-| `--views` | `beauty,side,top` | 可另选 `front`、`back` |
-| `--no-render` | 关闭 | 只生成和检查模型，跳过预览渲染 |
+| Two positional arguments | Required | Top row, then bottom row; capitalization is preserved |
+| `--length` | `150` | Overall length in mm; other dimensions scale proportionally |
+| `--angle` | `70` | Terminal text plane angle above the base, from 45–85° |
+| `--fit` | `stretch` | Fill the template; `preserve` keeps the font's proportions |
+| `--font` | Local default font | TTF/OTF for this build without changing the default |
+| `--output` | `outputs/<timestamp>` | New or empty directory; existing results are never overwritten |
+| `--views` | `beauty,side,top` | Also accepts `front` and `back` |
+| `--no-render` | Off | Generate and check the model without rendering previews |
 
-150 mm 模型占地约 150 × 65 mm，展示台内部直径 52 mm，两行 70° 模型约高 56 mm。每个字母以及标点的实心部分都有独立圆弧延伸至底座，然后合并为一个实体。长度改变时，展示台、边缘和文字一并缩放。
+At 150 mm overall length, the footprint is about 150 × 65 mm and the display platform's clear interior diameter is 52 mm. A two-row model at 70° is about 56 mm tall. Each filled letter or punctuation component follows its own circular arc down to the base, then joins a single solid. Changing the length scales the platform, rim, and lettering together.
 
-Bandosa 不含中文、重音字母或 emoji。缺失字符会明确报错；缺失的弯引号可以转换为字体已有的直引号，并记录在报告中。当前排字不支持复杂文字塑形、连字或双向文本。参数、单行模式及 JSON 输入见 [docs/parameters.md](docs/parameters.md)。
+Bandosa does not cover Chinese characters, accented letters, or emoji. Missing characters produce an explicit error. Unavailable curly quotes can be mapped to supported straight quotes, with substitutions recorded in the report. The current layout does not support complex-script shaping, ligatures, or bidirectional text. See [parameters](docs/parameters.md) for details, single-row mode, and JSON input.
 
-对于应用集成，直接用 `subprocess.run([sys.executable, "generate.py", top, bottom], check=True)` 传入参数列表。文字含命令行选项前缀时，在两个位置参数前加 `--`；需要任意文字数据时也可使用 [JSON 示例](examples/job.json)。不要将未经转义的文字拼进 shell 命令。
+For application integration, pass an argument list directly with `subprocess.run([sys.executable, "generate.py", top, bottom], check=True)`. If text begins like a command-line option, add `--` before the two positional arguments. The [JSON example](examples/job.json) also accepts text as data. Do not interpolate unescaped text into a shell command.
 
-## 输出与检查
+## Outputs and checks
 
-每次成功生成会输出：
+Each successful build produces:
 
-- `nameplate.stl`：以毫米为单位的打印网格。
-- `nameplate.blend`：可编辑构造、文字源和摄影场景，包含使用的字体。
-- `nameplate.glb`：以米为单位的浏览器/3D 查看器模型。
-- `renders/*.png`：选择的预览视角。
-- `report.json`、`stl_check.json`：尺寸、角度、缓存命中及网格检查。
-- `request.json`、`build.log`：本次参数和运行日志。
+- `nameplate.stl`: print mesh with coordinates in millimeters.
+- `nameplate.blend`: editable construction, text sources, and studio scene, with the font packed into the file.
+- `nameplate.glb`: model in meters for browsers and 3D viewers.
+- `renders/*.png`: the selected preview views.
+- `report.json` and `stl_check.json`: dimensions, angle, cache statistics, and mesh checks.
+- `request.json` and `build.log`: build parameters and execution log.
 
-成功以 `report.json` 和 `stl_check.json` 的 **`PASS`** 为准。STL 导出后会重新读取，检查单一连通实体、闭合边、非退化三角形、正体积、底部 Z=0、请求长度及末端文字角度。GLB 另检查毫米到米的缩放。切片与实物打印尚未验证。
+Success requires **`PASS`** in both `report.json` and `stl_check.json`. After export, the STL is read back to check a single connected solid, closed edges, nondegenerate triangles, positive volume, bottom Z=0, requested length, and terminal text angle. GLB checks also verify the millimeter-to-meter scale. Slicing and physical printing have not been verified.
 
-## 字体缓存与开发
+## Font caching and development
 
-缓存按字体 SHA-256、Blender 主次版本、清理流程版本和曲线分辨率区分。相同条件下已缓存字形应显示 `converted_glyphs: 0`。生成仍需进行圆弧建模、布尔合并、网格验证和可选渲染；缓存只省去重复的字体转换和清理。
+Caches are identified by the font's SHA-256, Blender major/minor version, cleanup recipe version, and curve resolution. Previously cached glyphs under the same conditions should report `converted_glyphs: 0`. A build still performs arc construction, Boolean unions, mesh validation, and optional rendering; caching only removes repeated font conversion and cleanup.
 
-大型字体可以只预处理需要的字符：
+For large fonts, preprocess only the characters you need:
 
 ```bash
 python3 generate.py setup-font /path/to/custom.ttf --chars "ALICEBOB0123456789"
 ```
 
-后续生成会增量加入缺失字形。维护文档记录了本次遇到的具体问题和修复：
+Later builds add missing glyphs incrementally. The maintenance documentation records the issues encountered and their fixes:
 
-- [字体预处理](docs/font-preprocessing.md)：Blender 字距校准、无面顶点、点接触轮廓。
-- [故障与修复](docs/troubleshooting.md)：布尔失败、重复反向三角形、缩放精度、导出单位。
-- [验证记录与测试](docs/validation.md)：测试边界及运行方法。
+- [Font preprocessing](docs/font-preprocessing.md): Blender spacing calibration, vertices without filled faces, and contours touching at a point.
+- [Troubleshooting](docs/troubleshooting.md): Boolean failures, duplicate opposite triangles, scaling precision, and export units.
+- [Validation and tests](docs/validation.md): test coverage, commands, and front, side, and top preview images.
 
-轻量测试在 CI 上运行；完整 Blender 验证需要本机字体：
+Lightweight tests run in CI. Full Blender validation requires a local font:
 
 ```bash
-python3 -m pip install numpy  # 仅独立网格检查测试需要；生成器无需此安装
+python3 -m pip install numpy  # Only needed for standalone mesh tests, not generation
 python3 -m unittest discover -s tests -v
 python3 generate.py "PUT YOUR" "NAME HERE" --no-render
 ```
 
-代码采用 [GNU GPL v3](LICENSE)。第三方字体及其派生资产遵循各自许可，见 [THIRD_PARTY.md](THIRD_PARTY.md)。
+The code is licensed under [GNU GPL v3](LICENSE). Third-party fonts and their derived assets follow their own licenses; see [THIRD_PARTY.md](THIRD_PARTY.md).
