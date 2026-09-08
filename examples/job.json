@@ -1,0 +1,10 @@
+{
+  "rows": ["PUT YOUR", "NAME HERE"],
+  "output": "outputs/json-example",
+  "font": "assets/fonts/bandosa.regular.ttf",
+  "cache_dir": "assets/font-cache",
+  "length": 150,
+  "angle": 70,
+  "fit": "stretch",
+  "views": ["beauty", "front", "side", "top"]
+}

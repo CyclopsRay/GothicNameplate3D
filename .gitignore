@@ -1,0 +1,24 @@
+# Local typography assets are not distributed with this repository.
+*.[tT][tT][fF]
+*.[oO][tT][fF]
+*.[tT][tT][cC]
+*.[wW][oO][fF][fF]
+*.[wW][oO][fF][fF]2
+assets/font-cache/*
+!assets/font-cache/README.md
+.nameplate-local.json
+.nameplate-font-cache/
+
+# Generated models can embed fonts. Keep them and job metadata local.
+outputs/
+*.stl
+*.blend
+*.blend1
+*.glb
+*.gltf
+__pycache__/
+*.py[cod]
+.venv/
+.DS_Store
+*.log
+.coverage

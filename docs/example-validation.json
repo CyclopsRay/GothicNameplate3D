@@ -1,0 +1,70 @@
+{
+  "rows": [
+    "PUT YOUR",
+    "NAME HERE"
+  ],
+  "font": "Bandosa Regular",
+  "layout": [
+    {
+      "text": "NAME HERE",
+      "fit": "stretch",
+      "width_mm_at_150": 87.0,
+      "height_mm_at_150": 27.0
+    },
+    {
+      "text": "PUT YOUR",
+      "fit": "stretch",
+      "width_mm_at_150": 87.0,
+      "height_mm_at_150": 26.0
+    }
+  ],
+  "display_clear_diameter_mm": 52.0,
+  "display_center_xy_mm": [
+    120.0,
+    29.5
+  ],
+  "stl": {
+    "triangles": 1875518,
+    "vertices": 937761,
+    "dimensions_mm": [
+      150.0,
+      65.0,
+      56.07323455810547
+    ],
+    "nonmanifold_edges": 0,
+    "boundary_edges": 0,
+    "zero_area_triangles": 0,
+    "connected_components": 1,
+    "measured_text_angle_degrees": 69.9999998026062,
+    "volume_mm3": 95738.50416294647,
+    "minimum_z_mm": 0.0,
+    "status": "PASS"
+  },
+  "glb": {
+    "status": "PASS",
+    "mesh_nodes": 1,
+    "millimeter_to_meter_scale": 0.001
+  },
+  "removed_opposite_triangle_pairs": 0,
+  "slicer_verified": false,
+  "build_and_export_seconds": 35.87983941700077,
+  "total_seconds": 64.9879547500168,
+  "status": "PASS",
+  "environment": {
+    "blender": "5.2.1",
+    "operating_system": "macOS",
+    "date": "2026-09-08"
+  },
+  "cache": {
+    "key": "ae6b2e30093e8a9266f7-b5.2-r2-u6",
+    "requested_characters": 12,
+    "requested_unique_glyphs": 12,
+    "cache_hits": 12,
+    "converted_glyphs": 0,
+    "total_cached_glyphs": 90,
+    "cached_characters": 90,
+    "removed_loose_vertices_total": 102,
+    "seconds": 0.08042341703549027,
+    "font_family": "Bandosa"
+  }
+}
